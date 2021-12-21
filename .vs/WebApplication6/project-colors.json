@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "16ac150c-f965-4ee4-8e79-d0f417c2af42": {
+      "ProjectGuid": "16ac150c-f965-4ee4-8e79-d0f417c2af42",
+      "DisplayName": "WebApplication6",
+      "ColorIndex": 0
+    },
+    "60dcc513-9ee1-498c-9da0-700acadee325": {
+      "ProjectGuid": "60dcc513-9ee1-498c-9da0-700acadee325",
+      "DisplayName": "DAL",
+      "ColorIndex": 1
+    },
+    "9e0c460c-374a-43da-8f50-16f806050d4d": {
+      "ProjectGuid": "9e0c460c-374a-43da-8f50-16f806050d4d",
+      "DisplayName": "BLL",
+      "ColorIndex": 2
+    },
+    "9a061292-3b8c-48a4-a135-2bab3abaefe2": {
+      "ProjectGuid": "9a061292-3b8c-48a4-a135-2bab3abaefe2",
+      "DisplayName": "DTO",
+      "ColorIndex": 3
+    }
+  },
+  "NextColorIndex": 4
+}

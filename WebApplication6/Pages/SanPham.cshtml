@@ -1,0 +1,171 @@
+﻿@page
+@using DTO
+@model WebApplication6.Pages.SanPhamModel
+@using System.Text.Json
+<script type="text/javascript">
+    var dataCat = @Html.Raw(JsonSerializer.Serialize(Model.lst));
+</script>
+<h1 class="display-4">Sản phẩm</h1>
+<form method="post">
+<div class="row">
+        <div class="col-lg-2 form-group">
+            <label>Mã sản phẩm : </label>
+            <input type="text" id="msp" name="msp" class="form-control" />
+        </div>
+        <div class="col-lg-2 form-group">
+            <label>Tên sản phẩm : </label>
+            <input type="text"  id="tsp" name="tsp" class="form-control" />
+        </div>
+        <div class="col-lg-2 form-group">
+            <label>Đơn vị tính : </label>
+            <select id="dvt" name="dvt" class="form-control">
+                <option value =""></option>
+                <option value ="Chai"> Chai</option>            
+                <option value ="Thùng"> Thùng</option> 
+                <option value ="Cái"> Cái</option> 
+                <option value ="Hộp"> Hộp</option> 
+                <option value ="Lon"> Lon</option>
+            </select>
+            @* <input type="text"  id="dvt" name="dvt" class="form-control" />*@
+        </div>
+        <div class="col-lg-2 form-group">
+            <label>Đơn giá : </label>
+            <select  id="dg" name="dg" class="form-control">
+                <option value =""></option>
+                <option value ="1000000">Dưới 100000</option>            
+                <option value ="2000000">Từ 1000000 đến 2000000</option> 
+                <option value ="3000000">Từ 2000000 đến 3000000</option> 
+                <option value ="4000000">Từ 3000000 đến 4000000</option> 
+                <option value ="4000001">Trên 4000000</option>
+            </select>
+                @*
+            <input type="text"  id="dg" name="dg" class="form-control" />*@
+        </div>
+        <div class="col-lg-2 form-group">
+            <label>Loại sản phẩm</label>
+            <select  id="lsp" name="lsp" class="form-control">
+                <option value =""> </option>            
+                @foreach (var l in @Model.lst1)
+                {
+                    <option value ="@l.MaLoaiSp">@l.MaLoaiSp</option>
+                }
+            </select>
+        </div>
+        <div class="col-1 form-group">
+            <label>Sắp xếp</label>
+            <select  id="sx" name="sx" class="form-control">
+                <option value =""> </option>            
+                <option value ="tangdan">Đơn giá ↑ </option>
+                <option value ="giamdan">Đơn giá ↓ </option>
+            </select>
+        </div>
+        <div class="col-1 form-group">
+            <br />
+            <input type="submit" class="btn btn-primary" value="Tìm kiếm"/>
+        </div>           
+</div>
+</form>
+
+<br />
+<p><b>Danh mục sản phẩm.</b></p>
+@if (Request.Method.ToUpper() == "GET")
+{
+<div>
+<table class="table table-condensed">
+    <tr>
+        <th>Mã Sản phẩm</th>
+        <th>Tên sản phẩm</th>
+        <th>Đơn vị tính</th>
+        <th>Đơn giá</th>
+        <th>Mã loại Sản phẩm</th>
+        <th>Hình sản phẩm</th>
+        <th>Action</th>
+    </tr>
+    @foreach (SanPhamDTO c in Model.lst)
+    {
+        <tr>
+            <td>@c.MaSp</td>
+            <td>@c.TenSp</td>
+            <td>@c.Donvitinh</td>
+            <td>@c.Dongia</td>
+            <td>@c.MaLoaiSp</td>
+            <td>@c.HinhSp</td>
+            <td>
+                <button type="button" class="btn btn-primary" onclick="openModal('@c.MaSp')" >Sửa</button>
+                <button type="button" class="btn btn-primary" >Xoá</button>
+            </td>
+        </tr>
+    }
+</table>
+</div>
+}
+else if(Request.Method.ToUpper() == "POST") {
+<div>
+    <table class="table table-condensed">
+    <tr>
+        <th>Mã Sản phẩm</th>
+        <th>Tên sản phẩm</th>
+        <th>Đơn vị tính</th>
+        <th>Đơn giá</th>
+        <th>Mã loại Sản phẩm</th>
+        <th>Hình sản phẩm</th>
+        <th>Action</th>
+    </tr>
+    @foreach (SanPhamDTO c in Model.lst)
+    {
+        <tr>
+            <td>@c.MaSp</td>
+            <td>@c.TenSp</td>
+            <td>@c.Donvitinh</td>
+            <td>@c.Dongia</td>
+            <td>@c.MaLoaiSp</td>
+            <td>@c.HinhSp</td>
+            <td>
+                <button type="button" class="btn btn-primary" onclick="openModal('@c.MaSp')" >Sửa</button>
+                <button type="button" class="btn btn-primary" >Xoá</button>
+            </td>
+        </tr>
+    }
+    </table>
+</div>
+}
+<div id="divModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <div class="form-group">
+            <label>Tên sản phẩm - <span id="spanid"></span></label>
+            <input type="text" class="form-control" id="txtTsp" aria-aria-describedby="tspHelp" placeholder="Nhập tên sản phẩm" /> 
+
+        </div>
+        <div class="form-group">
+            <label>Đơn vị tính - <span id="spanid"></span></label>
+            <input type="text" class="form-control" id="txtDvt" aria-aria-describedby="dvtHelp" placeholder="Nhập đơn vị tính" /> 
+
+        </div>
+        <div class="form-group">
+            <label>Đơn giá - <span id="spanid"></span></label>
+            <input type="text" class="form-control" id="txtDg" aria-aria-describedby="DgHelp" placeholder="Nhập đơn giá" /> 
+
+        </div>
+        <div class="form-group">
+            <label>Loại sản phẩm- <span id="spanid"></span></label>
+            <select class="form-control" id="txtlsp" aria-aria-describedby="tspHelp">
+                @foreach (var l in @Model.lst1)
+                {
+                    <option value ="@l.MaLoaiSp">@l.MaLoaiSp</option>
+                }
+            </select>
+        </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
+        <button type="button" onclick="saveCategory()" class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
+    </div>
+</div>
